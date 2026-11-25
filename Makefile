@@ -3,7 +3,7 @@
 SONAR_HOST_URL ?= http://sonarqube:9000
 SONAR_NETWORK ?= sonar-net
 SONAR_TOKEN ?=
-.PHONY: test clean coverage linting
+.PHONY: test clean coverage linting docker
 
 test:
 	cd backend && mvn test && mvn dependency:copy-dependencies -DoutputDirectory=target/dependency
@@ -24,3 +24,6 @@ linting: coverage
 		-v .:/usr/src \
 		-u $$(id -u):$$(id -g) \
 		sonarsource/sonar-scanner-cli
+
+docker:
+	docker build -t grade-compass-backend:latest ./backend
